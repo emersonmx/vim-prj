@@ -5,8 +5,7 @@ let s:did_load = 1
 
 let g:prj_config_path = ".vim"
 let g:prj_config_filename = "vimrc"
-let g:prj_cache_path = "$HOME/.cache/vim-prj"
-let g:prj_authorized_path = g:prj_cache_path."/authorized"
+let g:prj_authorized_path = "$HOME/.cache/vim-prj"
 
 function! s:get_filename()
     return g:prj_config_path."/".g:prj_config_filename
