@@ -45,17 +45,29 @@ function! s:is_authorized()
     return v:shell_error == 0
 endfunction
 
-function! prj#load()
+function! s:load_config()
     let config_path = s:get_config_path()
     if empty(config_path)
         return
     endif
+
     if !s:is_authorized()
         echom "Unable to source '".config_path."'."
         echom "Authorize with 'call prj#allow()'."
         return
     endif
+
     exec "source ".config_path
+endfunction
+
+function! prj#load()
+    let config_path = s:get_config_path()
+    if empty(config_path)
+        echo "config not found!"
+        return
+    endif
+
+    call s:load_config()
 endfunction
 
 function! prj#allow()
@@ -70,7 +82,7 @@ function! prj#allow()
     let auth_path = s:get_auth_path(config_path)
     call system("sha256sum ".config_path." > ".auth_path)
 
-    call prj#load()
+    call s:load_config()
 endfunction
 
 function! prj#disallow()
@@ -84,7 +96,7 @@ function! prj#disallow()
 
     let auth_path = s:get_auth_path(config_path)
     call system("rm -f ".auth_path)
-    call prj#load()
+    call s:load_config()
 endfunction
 
 function! prj#edit()
@@ -101,5 +113,5 @@ endfunction
 
 augroup prj
     autocmd!
-    call prj#load()
+    autocmd VimEnter * call s:load_config()
 augroup END
