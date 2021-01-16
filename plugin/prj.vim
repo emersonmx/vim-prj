@@ -52,8 +52,8 @@ function! s:load_config()
     endif
 
     if !s:is_authorized()
-        echo "Unable to source '".config_path."'."
-        echo "Authorize with 'call prj#allow()'."
+        echo "Unable to source '".config_path."'.
+        \     Authorize with 'call prj#allow()'."
         return
     endif
 
