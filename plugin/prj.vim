@@ -8,8 +8,12 @@ let g:prj_config_filename = "vimrc"
 let g:prj_cache_path = "$HOME/.cache/vim-prj"
 let g:prj_authorized_path = g:prj_cache_path."/authorized"
 
+function! s:get_filename()
+    return g:prj_config_path."/".g:prj_config_filename
+endfunction
+
 function! s:get_config_path()
-    let filename = g:prj_config_path."/".g:prj_config_filename
+    let filename = s:get_filename()
     let filepath = findfile(filename, ";")
     if empty(filepath)
         return
@@ -86,7 +90,9 @@ endfunction
 function! prj#edit()
     let config_path = s:get_config_path()
     if empty(config_path)
-        echo "config not found!"
+        call system("mkdir -p ".g:prj_config_path)
+        call system("touch ".s:get_filename())
+        call prj#edit()
         return
     endif
 
