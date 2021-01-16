@@ -17,7 +17,7 @@ function! s:get_config_path()
     if empty(filepath)
         return
     endif
-    return fnamemodify(filename, ":p")
+    return fnamemodify(filepath, ":p")
 endfunction
 
 function! s:base64(data)
