@@ -3,12 +3,11 @@ if exists('s:did_load')
 endif
 let s:did_load = 1
 
-let g:prj_config_path = ".vim"
-let g:prj_config_filename = "vimrc"
+let g:prj_config_path = ".vim/vimrc"
 let g:prj_authorized_path = "$HOME/.cache/vim-prj"
 
 function! s:get_filename()
-    return g:prj_config_path."/".g:prj_config_filename
+    return g:prj_config_path
 endfunction
 
 function! s:get_config_path()
@@ -101,9 +100,7 @@ endfunction
 function! prj#edit()
     let config_path = s:get_config_path()
     if empty(config_path)
-        call system("mkdir -p ".g:prj_config_path)
-        call system("touch ".s:get_filename())
-        call prj#edit()
+        echo "config not found!"
         return
     endif
 
