@@ -3,8 +3,12 @@ if exists('s:did_load')
 endif
 let s:did_load = 1
 
-let g:prj_config_path = ".vim/vimrc"
-let g:prj_authorized_path = "$HOME/.cache/vim-prj"
+if !exists("g:prj_config_path")
+    let g:prj_config_path = ".prjrc"
+endif
+if !exists("g:prj_authorized_path")
+    let g:prj_authorized_path = "$HOME/.cache/vim-prj"
+endif
 
 function! s:get_filename()
     return g:prj_config_path
