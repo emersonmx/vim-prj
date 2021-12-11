@@ -47,11 +47,10 @@ function! s:authorize(path)
     call system("sha256sum ".a:path." > ".auth_path)
 endfunction
 
-function! s:load_config()
+function! s:load_configs(configs)
     let unauth_configs = []
-    let configs = s:get_config_files()
 
-    for config in configs
+    for config in a:configs
         if s:is_authorized(config) == 1
             continue
         endif
@@ -72,7 +71,7 @@ function! s:load_config()
         endfor
     endif
 
-    for config in configs
+    for config in a:configs
         exec "source ".config
     endfor
 endfunction
@@ -83,8 +82,7 @@ function! prj#reload()
         echo "config not found!"
         return
     endif
-
-    call s:load_config()
+    call s:load_configs(configs)
 endfunction
 
 function! prj#edit()
