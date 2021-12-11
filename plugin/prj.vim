@@ -10,8 +10,4 @@ if !exists("g:prj_authorized_path")
     let g:prj_authorized_path = "$HOME/.cache/vim-prj"
 endif
 
-
-augroup prj
-    autocmd!
-    autocmd VimEnter * call s:load_config()
-augroup END
+call prj#reload()
